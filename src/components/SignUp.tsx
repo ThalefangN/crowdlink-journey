@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -131,6 +131,13 @@ const SignUp = () => {
               <Globe className="mr-2 h-4 w-4" />
               Google
             </Button>
+          </div>
+
+          <div className="text-center text-sm">
+            Already have an account?{" "}
+            <Link to="/signin" className="text-primary hover:underline">
+              Sign in
+            </Link>
           </div>
         </form>
       </div>
