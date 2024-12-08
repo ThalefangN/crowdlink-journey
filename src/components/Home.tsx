@@ -23,6 +23,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   { name: "Crime", value: 20 },
@@ -31,6 +32,8 @@ const data = [
 ];
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Search Bar */}
@@ -70,11 +73,11 @@ const HomePage = () => {
             </Button>
           </div>
           <div className="flex gap-2">
-            <Button className="flex-1">
+            <Button className="flex-1" onClick={() => navigate('/report')}>
               <Plus className="h-4 w-4 mr-2" />
               Make a Report
             </Button>
-            <Button variant="outline" className="flex-1">
+            <Button variant="outline" className="flex-1" onClick={() => navigate('/alerts')}>
               View All
             </Button>
           </div>
@@ -82,12 +85,12 @@ const HomePage = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4">
-          <Card className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer">
+          <Card className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer" onClick={() => navigate('/alerts')}>
             <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
             <h3 className="font-semibold">Quick Report</h3>
             <p className="text-sm text-gray-600">Emergency reporting</p>
           </Card>
-          <Card className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer">
+          <Card className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer" onClick={() => navigate('/map')}>
             <MapPin className="h-6 w-6 text-blue-500 mb-2" />
             <h3 className="font-semibold">Nearby Issues</h3>
             <p className="text-sm text-gray-600">8 reports nearby</p>
@@ -136,7 +139,7 @@ const HomePage = () => {
         <Card className="p-4">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold">Community Updates</h3>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/alerts')}>
               View All
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
@@ -182,23 +185,48 @@ const HomePage = () => {
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
         <div className="max-w-md mx-auto flex justify-around p-2">
-          <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-1"
+            onClick={() => navigate('/home')}
+          >
             <Home className="h-5 w-5" />
             <span className="text-xs">Home</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-1"
+            onClick={() => navigate('/report')}
+          >
             <FileEdit className="h-5 w-5" />
             <span className="text-xs">Report</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-1"
+            onClick={() => navigate('/alerts')}
+          >
             <Bell className="h-5 w-5" />
             <span className="text-xs">Alerts</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-1"
+            onClick={() => navigate('/map')}
+          >
             <Map className="h-5 w-5" />
             <span className="text-xs">Map</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex flex-col items-center gap-1"
+            onClick={() => navigate('/profile')}
+          >
             <UserRound className="h-5 w-5" />
             <span className="text-xs">Profile</span>
           </Button>

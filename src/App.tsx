@@ -9,6 +9,10 @@ import Verify from "./components/Verify";
 import SignIn from "./components/SignIn";
 import VerifyIdentity from "./components/VerifyIdentity";
 import HomePage from "./components/Home";
+import ReportScreen from "./components/ReportScreen";
+import AlertsScreen from "./components/AlertsScreen";
+import MapScreen from "./components/MapScreen";
+import ProfileScreen from "./components/ProfileScreen";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/signin" element={<SignIn />} />
           <Route path="/verify-identity" element={<VerifyIdentity />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/report" element={<ReportScreen />} />
+          <Route path="/alerts" element={<AlertsScreen />} />
+          <Route path="/map" element={<MapScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
