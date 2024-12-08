@@ -8,6 +8,7 @@ import SignUp from "./components/SignUp";
 import Verify from "./components/Verify";
 import SignIn from "./components/SignIn";
 import VerifyIdentity from "./components/VerifyIdentity";
+import HomePage from "./components/Home";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ const App = () => (
           <Route path="/verify" element={<Verify />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/verify-identity" element={<VerifyIdentity />} />
-          <Route path="/home" element={<div>Home Page</div>} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
