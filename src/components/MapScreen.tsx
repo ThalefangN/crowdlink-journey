@@ -1,9 +1,41 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Plus, Minus } from "lucide-react";
+import { Search, MapPin, Plus, Minus, AlertTriangle, Zap, Car } from "lucide-react";
+import { useState } from "react";
 
 const MapScreen = () => {
+  const [selectedEvent, setSelectedEvent] = useState<null | {
+    title: string;
+    type: string;
+    time: string;
+    location: string;
+  }>(null);
+
+  const sampleEvents = [
+    {
+      title: "Traffic Accident",
+      type: "accident",
+      time: "10 mins ago",
+      location: "Western Bypass, Gaborone",
+      coordinates: { lat: -24.6282, lng: 25.9231 }
+    },
+    {
+      title: "Power Outage",
+      type: "utility",
+      time: "30 mins ago",
+      location: "Block 7, Gaborone",
+      coordinates: { lat: -24.6572, lng: 25.9089 }
+    },
+    {
+      title: "Suspicious Activity",
+      type: "crime",
+      time: "1 hour ago",
+      location: "Phase 4, Phakalane",
+      coordinates: { lat: -24.5521, lng: 25.9436 }
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="sticky top-0 bg-white p-4 shadow-sm space-y-4">
@@ -18,15 +50,15 @@ const MapScreen = () => {
 
         <div className="flex gap-2 overflow-x-auto pb-2">
           <Button variant="outline" size="sm">
-            <span className="h-2 w-2 rounded-full bg-red-500 mr-2" />
+            <AlertTriangle className="h-4 w-4 text-red-500 mr-2" />
             Crime
           </Button>
           <Button variant="outline" size="sm">
-            <span className="h-2 w-2 rounded-full bg-yellow-500 mr-2" />
+            <Car className="h-4 w-4 text-yellow-500 mr-2" />
             Traffic
           </Button>
           <Button variant="outline" size="sm">
-            <span className="h-2 w-2 rounded-full bg-green-500 mr-2" />
+            <Zap className="h-4 w-4 text-green-500 mr-2" />
             Utilities
           </Button>
         </div>
@@ -41,6 +73,37 @@ const MapScreen = () => {
             <Minus className="h-4 w-4" />
           </Button>
         </div>
+
+        {/* Sample Event Markers */}
+        {sampleEvents.map((event, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            size="icon"
+            className="absolute bg-white"
+            style={{
+              top: `${30 + index * 15}%`,
+              left: `${30 + index * 15}%`,
+            }}
+            onClick={() => setSelectedEvent(event)}
+          >
+            <MapPin className="h-4 w-4 text-red-500" />
+          </Button>
+        ))}
+
+        {selectedEvent && (
+          <Card className="absolute bottom-4 left-4 right-4 p-4 bg-white">
+            <h3 className="font-semibold mb-2">{selectedEvent.title}</h3>
+            <p className="text-sm text-gray-600 mb-1">{selectedEvent.location}</p>
+            <p className="text-xs text-gray-500">{selectedEvent.time}</p>
+            <Button 
+              className="w-full mt-2"
+              onClick={() => setSelectedEvent(null)}
+            >
+              Close
+            </Button>
+          </Card>
+        )}
 
         <Button
           variant="outline"
@@ -58,19 +121,19 @@ const MapScreen = () => {
         </div>
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-red-500" />
+            <AlertTriangle className="h-4 w-4 text-red-500" />
             Crime
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-yellow-500" />
+            <Car className="h-4 w-4 text-yellow-500" />
             Traffic
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-green-500" />
+            <Zap className="h-4 w-4 text-green-500" />
             Utilities
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-orange-500" />
+            <MapPin className="h-4 w-4 text-orange-500" />
             Environment
           </div>
         </div>
