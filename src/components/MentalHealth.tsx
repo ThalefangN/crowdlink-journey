@@ -1,13 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Phone } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, Phone, MessageSquare, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const MentalHealth = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([
+    { type: "bot", text: "Hello! I'm here to help. How are you feeling today?" }
+  ]);
 
   const handleCall = (number: string) => {
     window.location.href = `tel:${number}`;
+  };
+
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    
+    setChatMessages(prev => [...prev, { type: "user", text: message }]);
+    setMessage("");
+    
+    // Simulate bot response
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, { 
+        type: "bot", 
+        text: "I understand how you're feeling. Remember, it's okay to ask for help. Would you like to talk to a professional counselor?" 
+      }]);
+    }, 1000);
   };
 
   return (
@@ -35,28 +56,45 @@ const MentalHealth = () => {
         </Card>
 
         <Card className="p-4">
-          <h2 className="font-semibold mb-4">Support Resources</h2>
-          <div className="space-y-4">
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleCall("0800111222")}
-            >
-              Counseling Services
-            </Button>
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleCall("0800333444")}
-            >
-              Youth Support Line
-            </Button>
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => handleCall("0800555666")}
-            >
-              Substance Abuse Help
+          <h2 className="font-semibold mb-4">Daily Motivation</h2>
+          <p className="text-sm text-gray-600 italic">
+            "Every day is a new beginning. Take a deep breath, smile, and start again."
+          </p>
+        </Card>
+
+        <Card className="p-4">
+          <h2 className="font-semibold mb-4">Mental Health Tips</h2>
+          <ul className="space-y-2 text-sm text-gray-600">
+            <li>• Practice mindful breathing for 5 minutes daily</li>
+            <li>• Take regular breaks from work</li>
+            <li>• Stay connected with loved ones</li>
+            <li>• Maintain a regular sleep schedule</li>
+            <li>• Exercise for at least 30 minutes daily</li>
+          </ul>
+        </Card>
+
+        <Card className="p-4">
+          <h2 className="font-semibold mb-4">Chat with Mental Health Assistant</h2>
+          <div className="h-[300px] overflow-y-auto mb-4 space-y-4">
+            {chatMessages.map((msg, index) => (
+              <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] p-3 rounded-lg ${
+                  msg.type === 'user' ? 'bg-primary text-white' : 'bg-gray-100'
+                }`}>
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type your message..."
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            />
+            <Button onClick={handleSendMessage}>
+              <Send className="h-4 w-4" />
             </Button>
           </div>
         </Card>

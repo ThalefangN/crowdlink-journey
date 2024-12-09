@@ -2,14 +2,40 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Camera, Video, Plus } from "lucide-react";
+import { ArrowLeft, Camera, Video, Plus, Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const ReportScreen = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast.success("Help is on the way! Authorities have been notified.");
+      navigate('/home');
+    }, 3000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="text-center text-white space-y-4">
+            <div className="animate-spin">
+              <Loader className="h-12 w-12" />
+            </div>
+            <div className="animate-pulse text-xl font-semibold">
+              Searching for help...
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="sticky top-0 bg-white p-4 flex items-center gap-4 shadow-sm">
         <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-5 w-5" />
@@ -85,7 +111,7 @@ const ReportScreen = () => {
           </div>
         </Card>
 
-        <Button className="w-full" size="lg">
+        <Button className="w-full" size="lg" onClick={handleSubmit}>
           Submit Report
         </Button>
       </div>
