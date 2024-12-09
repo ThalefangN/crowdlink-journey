@@ -10,8 +10,6 @@ import {
   Phone,
   AlertTriangle,
   MapPin,
-  Heart,
-  Leaf,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
@@ -34,10 +32,6 @@ const data = [
 
 const HomePage = () => {
   const navigate = useNavigate();
-
-  const handlePhoneCall = (number: string) => {
-    window.location.href = `tel:${number}`;
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -88,42 +82,23 @@ const HomePage = () => {
           </div>
         </Card>
 
-        {/* Extended Incident Categories */}
-        <div className="grid grid-cols-2 gap-4 p-4">
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 gap-4">
           <Card 
-            className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer"
-            onClick={() => navigate('/report-corruption')}
+            className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer" 
+            onClick={() => navigate('/quick-report')}
           >
             <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
-            <h3 className="font-semibold">Report Corruption</h3>
-            <p className="text-sm text-gray-600">Anonymous reporting available</p>
+            <h3 className="font-semibold">Quick Report</h3>
+            <p className="text-sm text-gray-600">Emergency reporting</p>
           </Card>
-          
           <Card 
-            className="p-4 bg-purple-50 hover:bg-purple-100 transition-colors cursor-pointer"
-            onClick={() => navigate('/mental-health')}
+            className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer"
+            onClick={() => navigate('/nearby-issues')}
           >
-            <Heart className="h-6 w-6 text-purple-500 mb-2" />
-            <h3 className="font-semibold">Mental Health Support</h3>
-            <p className="text-sm text-gray-600">24/7 crisis helpline</p>
-          </Card>
-
-          <Card 
-            className="p-4 bg-orange-50 hover:bg-orange-100 transition-colors cursor-pointer"
-            onClick={() => navigate('/domestic-violence')}
-          >
-            <Home className="h-6 w-6 text-orange-500 mb-2" />
-            <h3 className="font-semibold">Domestic Violence</h3>
-            <p className="text-sm text-gray-600">Get help immediately</p>
-          </Card>
-
-          <Card 
-            className="p-4 bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
-            onClick={() => navigate('/environmental')}
-          >
-            <Leaf className="h-6 w-6 text-green-500 mb-2" />
-            <h3 className="font-semibold">Environmental Issues</h3>
-            <p className="text-sm text-gray-600">Report environmental concerns</p>
+            <MapPin className="h-6 w-6 text-blue-500 mb-2" />
+            <h3 className="font-semibold">Nearby Issues</h3>
+            <p className="text-sm text-gray-600">8 reports nearby</p>
           </Card>
         </div>
 
@@ -146,31 +121,19 @@ const HomePage = () => {
           </div>
         </Card>
 
-        {/* Updated Emergency Hotlines */}
+        {/* Emergency Hotlines */}
         <Card className="p-4">
           <h3 className="font-semibold mb-4">Emergency Hotlines</h3>
           <div className="grid grid-cols-3 gap-2">
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2"
-              onClick={() => handlePhoneCall('999')}
-            >
+            <Button variant="outline" className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
               Police
             </Button>
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2"
-              onClick={() => handlePhoneCall('998')}
-            >
+            <Button variant="outline" className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
               Fire
             </Button>
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2"
-              onClick={() => handlePhoneCall('997')}
-            >
+            <Button variant="outline" className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
               Medical
             </Button>
