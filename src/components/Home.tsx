@@ -10,8 +10,6 @@ import {
   Phone,
   AlertTriangle,
   MapPin,
-  Trophy,
-  ChevronRight,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
@@ -24,6 +22,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useNavigate } from "react-router-dom";
+import ActivityOverview from "./ActivityOverview";
 
 const data = [
   { name: "Crime", value: 20 },
@@ -85,12 +84,18 @@ const HomePage = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-4">
-          <Card className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer" onClick={() => navigate('/alerts')}>
+          <Card 
+            className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer" 
+            onClick={() => navigate('/quick-report')}
+          >
             <AlertTriangle className="h-6 w-6 text-red-500 mb-2" />
             <h3 className="font-semibold">Quick Report</h3>
             <p className="text-sm text-gray-600">Emergency reporting</p>
           </Card>
-          <Card className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer" onClick={() => navigate('/map')}>
+          <Card 
+            className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer"
+            onClick={() => navigate('/nearby-issues')}
+          >
             <MapPin className="h-6 w-6 text-blue-500 mb-2" />
             <h3 className="font-semibold">Nearby Issues</h3>
             <p className="text-sm text-gray-600">8 reports nearby</p>
@@ -98,26 +103,7 @@ const HomePage = () => {
         </div>
 
         {/* Activity Overview */}
-        <Card className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold">Activity Overview</h3>
-            <Trophy className="h-5 w-5 text-yellow-500" />
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Total Reports</span>
-              <span className="font-semibold">20</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Verified Reports</span>
-              <span className="font-semibold">15</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Community Rank</span>
-              <span className="font-semibold">#3</span>
-            </div>
-          </div>
-        </Card>
+        <ActivityOverview />
 
         {/* Incident Overview Graph */}
         <Card className="p-4">
@@ -132,33 +118,6 @@ const HomePage = () => {
                 <Bar dataKey="value" fill="#2563eb" />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-        </Card>
-
-        {/* Community Updates */}
-        <Card className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold">Community Updates</h3>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/alerts')}>
-              View All
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          </div>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <span className="h-2 w-2 rounded-full bg-red-500 mt-2" />
-              <div>
-                <p className="text-sm font-medium">Burglary near Pine Street</p>
-                <p className="text-xs text-gray-500">20 mins ago</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="h-2 w-2 rounded-full bg-yellow-500 mt-2" />
-              <div>
-                <p className="text-sm font-medium">Traffic jam on Main Street</p>
-                <p className="text-xs text-gray-500">1 hour ago</p>
-              </div>
-            </div>
           </div>
         </Card>
 
