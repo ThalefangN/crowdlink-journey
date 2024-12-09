@@ -16,6 +16,9 @@ import ProfileScreen from "./components/ProfileScreen";
 import QuickReport from "./components/QuickReport";
 import NearbyIssues from "./components/NearbyIssues";
 import RewardsScreen from "./components/RewardsScreen";
+import ForgotPassword from "./components/ForgotPassword";
+import ReportCorruption from "./components/ReportCorruption";
+import MentalHealth from "./components/MentalHealth";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +42,9 @@ const App = () => (
           <Route path="/quick-report" element={<QuickReport />} />
           <Route path="/nearby-issues" element={<NearbyIssues />} />
           <Route path="/rewards" element={<RewardsScreen />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/report-corruption" element={<ReportCorruption />} />
+          <Route path="/mental-health" element={<MentalHealth />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

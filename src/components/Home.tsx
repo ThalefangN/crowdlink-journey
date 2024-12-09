@@ -10,6 +10,10 @@ import {
   Phone,
   AlertTriangle,
   MapPin,
+  Shield,
+  Heart,
+  Handshake,
+  TreePine,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
@@ -22,6 +26,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import ActivityOverview from "./ActivityOverview";
 
 const data = [
@@ -32,6 +37,23 @@ const data = [
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  const handleEmergencyCall = (number: string) => {
+    window.location.href = `tel:${number}`;
+  };
+
+  const handleLocationPermission = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          toast.success("Location shared. Authorities have been notified.");
+        },
+        () => {
+          toast.error("Please enable location services to continue.");
+        }
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -105,6 +127,48 @@ const HomePage = () => {
         {/* Activity Overview */}
         <ActivityOverview />
 
+        {/* Additional Support Services */}
+        <div className="grid grid-cols-2 gap-4">
+          <Card 
+            className="p-4 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer"
+            onClick={() => {
+              handleLocationPermission();
+              navigate('/report-corruption');
+            }}
+          >
+            <Shield className="h-6 w-6 text-red-500 mb-2" />
+            <h3 className="font-semibold">Report Corruption</h3>
+            <p className="text-sm text-gray-600">Anonymous reporting</p>
+          </Card>
+          
+          <Card 
+            className="p-4 bg-purple-50 hover:bg-purple-100 transition-colors cursor-pointer"
+            onClick={() => navigate('/mental-health')}
+          >
+            <Heart className="h-6 w-6 text-purple-500 mb-2" />
+            <h3 className="font-semibold">Mental Health</h3>
+            <p className="text-sm text-gray-600">24/7 crisis support</p>
+          </Card>
+
+          <Card 
+            className="p-4 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer"
+            onClick={() => navigate('/domestic-violence')}
+          >
+            <Handshake className="h-6 w-6 text-blue-500 mb-2" />
+            <h3 className="font-semibold">Domestic Violence</h3>
+            <p className="text-sm text-gray-600">Get help now</p>
+          </Card>
+
+          <Card 
+            className="p-4 bg-green-50 hover:bg-green-100 transition-colors cursor-pointer"
+            onClick={() => navigate('/environmental')}
+          >
+            <TreePine className="h-6 w-6 text-green-500 mb-2" />
+            <h3 className="font-semibold">Environmental</h3>
+            <p className="text-sm text-gray-600">Report issues</p>
+          </Card>
+        </div>
+
         {/* Incident Overview Graph */}
         <Card className="p-4">
           <h3 className="font-semibold mb-4">Incident Overview</h3>
@@ -125,15 +189,27 @@ const HomePage = () => {
         <Card className="p-4">
           <h3 className="font-semibold mb-4">Emergency Hotlines</h3>
           <div className="grid grid-cols-3 gap-2">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={() => handleEmergencyCall("999")}
+            >
               <Phone className="h-4 w-4" />
               Police
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={() => handleEmergencyCall("998")}
+            >
               <Phone className="h-4 w-4" />
               Fire
             </Button>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={() => handleEmergencyCall("997")}
+            >
               <Phone className="h-4 w-4" />
               Medical
             </Button>
