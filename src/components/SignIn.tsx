@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Lock, Facebook, Globe } from "lucide-react";
@@ -83,6 +83,21 @@ const SignIn = () => {
             </Button>
           </div>
         </form>
+
+        <div className="text-center space-y-2">
+          <Link 
+            to="/forgot-password" 
+            className="text-sm text-primary hover:underline"
+          >
+            Forgot Password?
+          </Link>
+          <p className="text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-primary hover:underline">
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
