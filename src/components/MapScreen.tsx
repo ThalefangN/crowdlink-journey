@@ -8,9 +8,11 @@ const MapScreen = () => {
   const [selectedPin, setSelectedPin] = useState<number | null>(null);
 
   const sampleIncidents = [
-    { id: 1, lat: -24.6282, lng: 25.9231, title: "Traffic Incident - Resolved", type: "traffic" },
-    { id: 2, lat: -24.6582, lng: 25.9181, title: "Power Outage - Resolved", type: "utility" },
-    { id: 3, lat: -24.6482, lng: 25.9281, title: "Road Maintenance - Completed", type: "maintenance" }
+    { id: 1, lat: -24.6282, lng: 25.9231, title: "Traffic Incident - Resolved", location: "Game City Mall", type: "traffic" },
+    { id: 2, lat: -24.6582, lng: 25.9181, title: "Power Outage - Resolved", location: "Block 6", type: "utility" },
+    { id: 3, lat: -24.6482, lng: 25.9281, title: "Road Maintenance - Completed", location: "Main Mall", type: "maintenance" },
+    { id: 4, lat: -24.6382, lng: 25.9131, title: "Community Alert - Resolved", location: "Phase 2", type: "community" },
+    { id: 5, lat: -24.6682, lng: 25.9081, title: "Water Issue - Fixed", location: "Block 8", type: "utility" }
   ];
 
   return (
@@ -20,7 +22,7 @@ const MapScreen = () => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
             type="search"
-            placeholder="Search Location or Incident"
+            placeholder="Search Gaborone locations..."
             className="pl-10"
           />
         </div>
@@ -42,7 +44,6 @@ const MapScreen = () => {
       </div>
 
       <div className="relative h-[calc(100vh-200px)] bg-[#E5E3E4]">
-        {/* Sample pins */}
         {sampleIncidents.map((incident) => (
           <div
             key={incident.id}
@@ -57,7 +58,6 @@ const MapScreen = () => {
           </div>
         ))}
 
-        {/* Zoom controls */}
         <div className="absolute right-4 top-4 flex flex-col gap-2">
           <Button variant="outline" size="icon" className="bg-white">
             <Plus className="h-4 w-4" />
@@ -83,6 +83,9 @@ const MapScreen = () => {
             {sampleIncidents.find(i => i.id === selectedPin)?.title}
           </h3>
           <p className="text-sm text-gray-600">
+            Location: {sampleIncidents.find(i => i.id === selectedPin)?.location}
+          </p>
+          <p className="text-sm text-gray-600 mt-1">
             This incident has been resolved. Thank you for your patience.
           </p>
         </Card>
