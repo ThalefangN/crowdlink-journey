@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Camera, Video, Plus, Loader, MapPin } from "lucide-react";
+import { ArrowLeft, Camera, Video, Loader, MapPin, X, FileCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
@@ -13,14 +13,21 @@ const ReportScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSeverity, setSelectedSeverity] = useState("");
   const [description, setDescription] = useState("");
+  const [uploadedFiles, setUploadedFiles] = useState<Array<{ name: string, type: 'image' | 'video' }>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video') => {
     const file = event.target.files?.[0];
     if (file) {
+      setUploadedFiles(prev => [...prev, { name: file.name, type }]);
       toast.success(`Uploaded ${file.name}`);
     }
+  };
+
+  const removeFile = (fileName: string) => {
+    setUploadedFiles(prev => prev.filter(file => file.name !== fileName));
+    toast.success(`Removed ${fileName}`);
   };
 
   const handleSubmit = () => {
@@ -98,14 +105,14 @@ const ReportScreen = () => {
               accept="image/*"
               className="hidden"
               ref={fileInputRef}
-              onChange={handleFileUpload}
+              onChange={(e) => handleFileUpload(e, 'image')}
             />
             <input
               type="file"
               accept="video/*"
               className="hidden"
               ref={videoInputRef}
-              onChange={handleFileUpload}
+              onChange={(e) => handleFileUpload(e, 'video')}
             />
             <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
               <Camera className="h-4 w-4 mr-2" />
@@ -116,6 +123,29 @@ const ReportScreen = () => {
               Upload Video
             </Button>
           </div>
+
+          {/* Uploaded Files Display */}
+          {uploadedFiles.length > 0 && (
+            <div className="mb-4 space-y-2">
+              {uploadedFiles.map((file) => (
+                <div key={file.name} className="flex items-center justify-between p-2 bg-gray-100 rounded">
+                  <div className="flex items-center gap-2">
+                    <FileCheck className="h-4 w-4 text-green-500" />
+                    <span className="text-sm">{file.name}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={() => removeFile(file.name)}
+                  >
+                    <X className="h-4 w-4 text-gray-500 hover:text-red-500" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <Textarea 
             placeholder="Type your description here..." 
             className="min-h-[100px]"
