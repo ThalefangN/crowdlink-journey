@@ -1,19 +1,36 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Home from './components/Home';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+import HomeScreen from './screens/HomeScreen';
+import SignInScreen from './screens/SignInScreen';
+import SignUpScreen from './screens/SignUpScreen';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
-    </Router>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="SignIn" 
+            component={SignInScreen}
+            options={{ title: 'Sign In' }}
+          />
+          <Stack.Screen 
+            name="SignUp" 
+            component={SignUpScreen}
+            options={{ title: 'Sign Up' }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 
