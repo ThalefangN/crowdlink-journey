@@ -52,11 +52,13 @@ const ReportScreen = () => {
     <div className="min-h-screen bg-gray-50 pb-20">
       {isSubmitting && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="text-center text-white space-y-4">
-            <div className="animate-spin">
-              <Loader className="h-12 w-12" />
+          <div className="text-center space-y-4">
+            <div className="relative w-16 h-16 mx-auto">
+              <div className="absolute inset-0 border-4 border-blue-500 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+              <div className="absolute inset-0 border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
+              <div className="absolute inset-2 bg-blue-500 rounded-full opacity-50"></div>
             </div>
-            <div className="animate-pulse text-xl font-semibold">
+            <div className="animate-pulse text-xl font-semibold text-white">
               Re batla thuso... (Searching for help...)
             </div>
           </div>

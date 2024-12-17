@@ -66,11 +66,22 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        pulse: {
+          '0%, 100%': {
+            opacity: '1',
+            transform: 'scale(1)',
+          },
+          '50%': {
+            opacity: '0.5',
+            transform: 'scale(1.05)',
+          },
+        },
       },
       animation: {
         "slide-in": "slide-in 0.3s ease-out",
         "slide-out": "slide-out 0.3s ease-out",
         "fade-in": "fade-in 0.3s ease-out",
+        "pulse": "pulse 1.5s ease-in-out infinite",
       },
     },
   },
