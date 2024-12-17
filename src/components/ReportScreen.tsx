@@ -176,18 +176,18 @@ const ReportScreen = () => {
           <h2 className="font-semibold mb-4">4. Privacy Options</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <label>Share my identity with authorities</label>
+              <label className="text-lg">Share my identity with authorities</label>
               <Switch onClick={() => toast.success("Privacy setting updated")} />
             </div>
             <div className="flex items-center justify-between">
-              <label>Submit report anonymously</label>
+              <label className="text-lg">Submit report anonymously</label>
               <Switch onClick={() => toast.success("Anonymous reporting enabled")} />
             </div>
           </div>
         </Card>
 
         <Button 
-          className="w-full" 
+          className="w-full py-6 text-lg font-bold tracking-wide shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02]" 
           size="lg" 
           onClick={handleSubmit}
         >
