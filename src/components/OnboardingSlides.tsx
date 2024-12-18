@@ -8,17 +8,17 @@ const slides = [
   {
     title: "Welcome to CrowdLink",
     description: "Connect with your community like never before",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    image: "/lovable-uploads/903eb1c7-9e72-423c-bbec-1155f43c660a.png",
   },
   {
-    title: "Report & Share",
-    description: "Keep your neighborhood informed and safe",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+    title: "Health, Safety & Environment",
+    description: "Your well-being is our priority",
+    image: "/lovable-uploads/9f235324-40fc-440d-9753-385ef28b8e58.png",
   },
   {
-    title: "Stay Connected",
-    description: "Real-time updates that matter to you",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+    title: "Report & Track",
+    description: "Easy reporting and real-time tracking",
+    image: "/lovable-uploads/b3494753-b418-4528-b505-f23a66f6efb6.png",
   },
 ];
 
@@ -31,7 +31,7 @@ const OnboardingSlides = () => {
       setCurrentSlide(currentSlide + 1);
     } else {
       toast.success("Getting everything ready...");
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       navigate("/signup");
     }
   };
@@ -56,9 +56,9 @@ const OnboardingSlides = () => {
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-white"
                   />
-                  <div className="absolute inset-0 bg-black/20 rounded-3xl" />
+                  <div className="absolute inset-0 bg-black/10 rounded-3xl" />
                 </div>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-center items-center bg-background animate-fade-in">

@@ -28,6 +28,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import ActivityOverview from "./ActivityOverview";
+import HomeHeader from "./home/HomeHeader";
 
 const data = [
   { name: "Crime", value: 20 },
@@ -57,14 +58,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Botswana Flag Image */}
-      <div className="w-full h-48 bg-white shadow-sm">
-        <img
-          src="/lovable-uploads/d4749458-d86c-4d38-95a2-026321a6fce2.png"
-          alt="Botswana Flag with Confetti"
-          className="w-full h-full object-contain"
-        />
-      </div>
+      <HomeHeader />
 
       {/* Search Bar */}
       <div className="sticky top-0 bg-white shadow-sm p-4 z-10">
