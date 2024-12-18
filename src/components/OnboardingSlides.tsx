@@ -53,12 +53,13 @@ const OnboardingSlides = () => {
             <div className="h-full flex flex-col">
               <div className="relative h-2/3 p-4">
                 <div className="w-full h-full rounded-3xl overflow-hidden shadow-xl">
-                  <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className="w-full h-full object-contain bg-white"
-                  />
-                  <div className="absolute inset-0 bg-black/10 rounded-3xl" />
+                  <div className="w-full h-full relative bg-white">
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex-1 p-6 flex flex-col justify-center items-center bg-background animate-fade-in">
