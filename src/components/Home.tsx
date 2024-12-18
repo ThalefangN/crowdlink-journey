@@ -57,6 +57,15 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Botswana Flag Image */}
+      <div className="w-full h-48 bg-white shadow-sm">
+        <img
+          src="/lovable-uploads/d4749458-d86c-4d38-95a2-026321a6fce2.png"
+          alt="Botswana Flag with Confetti"
+          className="w-full h-full object-contain"
+        />
+      </div>
+
       {/* Search Bar */}
       <div className="sticky top-0 bg-white shadow-sm p-4 z-10">
         <div className="relative max-w-md mx-auto">
@@ -218,52 +227,52 @@ const HomePage = () => {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-        <div className="max-w-md mx-auto flex justify-around p-2">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg">
+        <div className="max-w-md mx-auto flex justify-around p-3">
           <Button
             variant="ghost"
-            size="sm"
-            className="flex flex-col items-center gap-1"
+            size="lg"
+            className="flex flex-col items-center gap-1.5 py-3 px-4 hover:bg-primary/10"
             onClick={() => navigate('/home')}
           >
-            <Home className="h-5 w-5" />
-            <span className="text-xs">Home</span>
+            <Home className="h-6 w-6" />
+            <span className="text-sm font-bold">Home</span>
           </Button>
           <Button
             variant="ghost"
-            size="sm"
-            className="flex flex-col items-center gap-1"
+            size="lg"
+            className="flex flex-col items-center gap-1.5 py-3 px-4 hover:bg-primary/10"
             onClick={() => navigate('/report')}
           >
-            <FileEdit className="h-5 w-5" />
-            <span className="text-xs">Report</span>
+            <FileEdit className="h-6 w-6" />
+            <span className="text-sm font-bold">Report</span>
           </Button>
           <Button
             variant="ghost"
-            size="sm"
-            className="flex flex-col items-center gap-1"
+            size="lg"
+            className="flex flex-col items-center gap-1.5 py-3 px-4 hover:bg-primary/10"
             onClick={() => navigate('/alerts')}
           >
-            <Bell className="h-5 w-5" />
-            <span className="text-xs">Alerts</span>
+            <Bell className="h-6 w-6" />
+            <span className="text-sm font-bold">Alerts</span>
           </Button>
           <Button
             variant="ghost"
-            size="sm"
-            className="flex flex-col items-center gap-1"
+            size="lg"
+            className="flex flex-col items-center gap-1.5 py-3 px-4 hover:bg-primary/10"
             onClick={() => navigate('/map')}
           >
-            <Map className="h-5 w-5" />
-            <span className="text-xs">Map</span>
+            <Map className="h-6 w-6" />
+            <span className="text-sm font-bold">Map</span>
           </Button>
           <Button
             variant="ghost"
-            size="sm"
-            className="flex flex-col items-center gap-1"
+            size="lg"
+            className="flex flex-col items-center gap-1.5 py-3 px-4 hover:bg-primary/10"
             onClick={() => navigate('/profile')}
           >
-            <UserRound className="h-5 w-5" />
-            <span className="text-xs">Profile</span>
+            <UserRound className="h-6 w-6" />
+            <span className="text-sm font-bold">Profile</span>
           </Button>
         </div>
       </div>
