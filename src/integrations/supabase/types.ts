@@ -58,6 +58,7 @@ export type Database = {
         Row: {
           category: string
           created_at: string | null
+          department_id: string | null
           description: string | null
           files: string[] | null
           id: string
@@ -70,6 +71,7 @@ export type Database = {
         Insert: {
           category: string
           created_at?: string | null
+          department_id?: string | null
           description?: string | null
           files?: string[] | null
           id?: string
@@ -82,6 +84,7 @@ export type Database = {
         Update: {
           category?: string
           created_at?: string | null
+          department_id?: string | null
           description?: string | null
           files?: string[] | null
           id?: string
@@ -91,7 +94,15 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "reports_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
