@@ -18,30 +18,37 @@ const AdminLogin = () => {
 
     try {
       // First check if this is a department email
-      const { data: department } = await supabase
+      const { data: department, error: deptError } = await supabase
         .from('departments')
         .select('name')
         .eq('email', email)
         .single();
 
-      if (!department) {
+      if (deptError || !department) {
         toast.error("Invalid admin credentials");
+        setIsLoading(false);
         return;
       }
 
-      const { error } = await supabase.auth.signInWithPassword({
+      // Now try to sign in
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        toast.error(error.message);
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error("Invalid email or password");
+        } else {
+          toast.error(error.message);
+        }
         return;
       }
 
-      toast.success("Welcome back, admin!");
+      toast.success(`Welcome back, ${department.name} admin!`);
       navigate('/admin/dashboard');
     } catch (error) {
+      console.error("Login error:", error);
       toast.error("An error occurred during login");
     } finally {
       setIsLoading(false);
@@ -52,7 +59,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md p-6 space-y-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold">Admin Login</h1>
+          <h1 className="text-2xl font-bold">Department Admin Login</h1>
           <p className="text-muted-foreground mt-2">
             Sign in to access your department dashboard
           </p>
@@ -60,10 +67,10 @@ const AdminLogin = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Admin Email</label>
+            <label className="text-sm font-medium">Department Email</label>
             <Input
               type="email"
-              placeholder="Enter your admin email"
+              placeholder="Enter your department email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
