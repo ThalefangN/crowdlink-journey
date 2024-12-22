@@ -7,9 +7,11 @@ import { toast } from "sonner";
 import { User, Mail, Lock, Phone, Facebook, Globe } from "lucide-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { supabase } from "@/integrations/supabase/client";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -24,13 +26,52 @@ const SignUp = () => {
       toast.error("Please agree to the terms and conditions");
       return;
     }
-    
-    // Play sound effect
-    new Audio("/click.mp3").play().catch(console.error);
-    
-    toast.success("Account created successfully!");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    navigate("/verify");
+
+    setIsLoading(true);
+    try {
+      const { data: existingUser } = await supabase
+        .from('profiles')
+        .select('email')
+        .eq('email', formData.email)
+        .single();
+
+      if (existingUser) {
+        toast.error("An account with this email already exists. Please sign in instead.");
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            username: formData.username,
+            phone: formData.phone,
+          },
+        },
+      });
+
+      if (error) {
+        if (error.message.includes("already registered")) {
+          toast.error("This email is already registered. Please sign in instead.");
+        } else {
+          toast.error(error.message);
+        }
+        return;
+      }
+
+      // Play sound effect
+      new Audio("/click.mp3").play().catch(console.error);
+      
+      toast.success("Account created successfully! Please check your email to verify your account.");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/verify");
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again.");
+      console.error("Signup error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -107,8 +148,8 @@ const SignUp = () => {
             </label>
           </div>
 
-          <Button type="submit" className="w-full">
-            Sign Up
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Creating Account..." : "Sign Up"}
           </Button>
 
           <div className="relative">

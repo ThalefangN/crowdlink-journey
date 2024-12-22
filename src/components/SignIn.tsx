@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Lock, Facebook, Globe } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,10 +16,35 @@ const SignIn = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    new Audio("/click.mp3").play().catch(console.error);
-    toast.success("Verifying identity...");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    navigate("/verify-identity");
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error("Invalid email or password. Please try again.");
+        } else if (error.message.includes("Email not confirmed")) {
+          toast.error("Please verify your email before signing in.");
+        } else {
+          toast.error(error.message);
+        }
+        return;
+      }
+
+      new Audio("/click.mp3").play().catch(console.error);
+      toast.success("Signed in successfully!");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/verify-identity");
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again.");
+      console.error("Signin error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -66,8 +93,8 @@ const SignIn = () => {
             </Link>
           </div>
 
-          <Button type="submit" className="w-full">
-            Sign In
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
 
           <div className="relative">
@@ -90,6 +117,13 @@ const SignIn = () => {
               <Globe className="mr-2 h-4 w-4" />
               Google
             </Button>
+          </div>
+
+          <div className="text-center text-sm">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-primary hover:underline">
+              Sign up
+            </Link>
           </div>
         </form>
       </div>
