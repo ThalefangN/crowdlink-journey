@@ -21,6 +21,8 @@ import ReportCorruption from "./components/ReportCorruption";
 import MentalHealth from "./components/MentalHealth";
 import DomesticViolence from "./components/DomesticViolence";
 import Environmental from "./components/Environmental";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +51,8 @@ const App = () => (
           <Route path="/mental-health" element={<MentalHealth />} />
           <Route path="/domestic-violence" element={<DomesticViolence />} />
           <Route path="/environmental" element={<Environmental />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

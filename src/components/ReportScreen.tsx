@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Camera, Video, Loader, MapPin, X, FileCheck } from "lucide-react";
+import { ArrowLeft, Camera, Video, MapPin, X, FileCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const ReportScreen = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const ReportScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSeverity, setSelectedSeverity] = useState("");
   const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<Array<{ name: string, type: 'image' | 'video' }>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +32,7 @@ const ReportScreen = () => {
     toast.success(`Removed ${fileName}`);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedCategory) {
       toast.error("Please select a category");
       return;
@@ -41,11 +43,36 @@ const ReportScreen = () => {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success("Help is on the way! Authorities have been notified.");
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error("Please sign in to submit a report");
+        navigate('/signin');
+        return;
+      }
+
+      const { error } = await supabase.from('reports').insert({
+        user_id: user.id,
+        category: selectedCategory,
+        description,
+        severity: selectedSeverity,
+        location,
+        files: uploadedFiles.map(file => file.name)
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success("Report submitted successfully!");
       navigate('/home');
-    }, 3000);
+    } catch (error) {
+      toast.error("Failed to submit report. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
