@@ -7,7 +7,22 @@ import { toast } from "sonner";
 const slides = [
   {
     title: "Welcome to CrowdLink",
-    description: "Connect with your community like never before",
+    description: (
+      <div className="text-center">
+        Connect with your community like never before
+        <div className="mt-2">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = '/admin';
+            }}
+            className="text-primary hover:underline font-bold"
+          >
+            Admin
+          </button>
+        </div>
+      </div>
+    ),
     image: "/lovable-uploads/903eb1c7-9e72-423c-bbec-1155f43c660a.png",
   },
   {
@@ -64,7 +79,7 @@ const OnboardingSlides = () => {
               </div>
               <div className="flex-1 p-6 flex flex-col justify-center items-center bg-background animate-fade-in">
                 <h2 className="text-2xl font-bold mb-2">{slide.title}</h2>
-                <p className="text-gray-600 text-center">{slide.description}</p>
+                {slide.description}
               </div>
             </div>
           </div>
