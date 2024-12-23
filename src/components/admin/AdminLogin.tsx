@@ -22,11 +22,16 @@ const AdminLogin = () => {
         .from('departments')
         .select('name')
         .eq('email', email)
-        .single();
+        .maybeSingle();
 
-      if (deptError || !department) {
-        toast.error("Invalid admin credentials");
-        setIsLoading(false);
+      if (deptError) {
+        console.error("Department check error:", deptError);
+        toast.error("Error checking department credentials");
+        return;
+      }
+
+      if (!department) {
+        toast.error("Invalid department email");
         return;
       }
 
@@ -37,8 +42,9 @@ const AdminLogin = () => {
       });
 
       if (error) {
+        console.error("Auth error:", error);
         if (error.message.includes("Invalid login credentials")) {
-          toast.error("Invalid email or password");
+          toast.error("Invalid email or password. Please make sure your account has been created.");
         } else {
           toast.error(error.message);
         }
@@ -49,7 +55,7 @@ const AdminLogin = () => {
       navigate('/admin/dashboard');
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("An error occurred during login");
+      toast.error("An unexpected error occurred during login");
     } finally {
       setIsLoading(false);
     }
