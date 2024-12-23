@@ -1,19 +1,11 @@
-# Welcome to your Lovable project
+# Developed and product belonging Tlhalefang Ntshilane dont fork the repo without asking for a license and after i grant the licenese please dont just redeploy my product, i wish ti contribute bacm to my fellow people rather recreate and make your own product using your ideas.
+
+
+## ANY UNATHORIZED EDIT WILL RESULT IN LEGAL ACTIONS BEEN TAKEN TO ANYONE WHO ACQUIRED AND USED THE SOURCE CODE
+
+## GET YOUR LICENSE HERE (+267 77593604)
 
 ## Project info
-
-**URL**: https://lovable.dev/projects/3754e9a8-00bd-459a-93c1-a1a943a28839
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/3754e9a8-00bd-459a-93c1-a1a943a28839) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
 If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
