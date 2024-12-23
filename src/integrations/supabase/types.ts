@@ -34,28 +34,40 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          full_name: string | null
           id: string
+          omang_id: string | null
           phone: string | null
           updated_at: string
           username: string | null
+          verification_documents: string[] | null
+          verification_status: string | null
           verified: boolean | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          full_name?: string | null
           id: string
+          omang_id?: string | null
           phone?: string | null
           updated_at?: string
           username?: string | null
+          verification_documents?: string[] | null
+          verification_status?: string | null
           verified?: boolean | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          full_name?: string | null
           id?: string
+          omang_id?: string | null
           phone?: string | null
           updated_at?: string
           username?: string | null
+          verification_documents?: string[] | null
+          verification_status?: string | null
           verified?: boolean | null
         }
         Relationships: []
@@ -68,7 +80,10 @@ export type Database = {
           description: string | null
           files: string[] | null
           id: string
+          is_community_alert: boolean | null
+          latitude: number | null
           location: string | null
+          longitude: number | null
           severity: string | null
           status: string | null
           updated_at: string | null
@@ -81,7 +96,10 @@ export type Database = {
           description?: string | null
           files?: string[] | null
           id?: string
+          is_community_alert?: boolean | null
+          latitude?: number | null
           location?: string | null
+          longitude?: number | null
           severity?: string | null
           status?: string | null
           updated_at?: string | null
@@ -94,7 +112,10 @@ export type Database = {
           description?: string | null
           files?: string[] | null
           id?: string
+          is_community_alert?: boolean | null
+          latitude?: number | null
           location?: string | null
+          longitude?: number | null
           severity?: string | null
           status?: string | null
           updated_at?: string | null
