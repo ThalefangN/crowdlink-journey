@@ -7,6 +7,17 @@ interface ReportsListProps {
   departmentId: string;
 }
 
+interface Report {
+  id: string;
+  category: string;
+  status: string;
+  created_at: string;
+  profiles?: {
+    full_name: string | null;
+    omang_id: string | null;
+  } | null;
+}
+
 const ReportsList = ({ departmentId }: ReportsListProps) => {
   const { data: reports } = useQuery({
     queryKey: ['department-reports', departmentId],
@@ -23,7 +34,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
         .eq('department_id', departmentId)
         .order('created_at', { ascending: false })
         .limit(10);
-      return data;
+      return data as Report[];
     },
   });
 
@@ -43,7 +54,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
               </p>
             </div>
             <Badge
-              variant={report.status === 'pending' ? 'warning' : 'success'}
+              variant={report.status === 'pending' ? 'secondary' : 'default'}
               className="capitalize"
             >
               {report.status}

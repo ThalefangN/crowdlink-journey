@@ -23,40 +23,43 @@ import DomesticViolence from "./components/DomesticViolence";
 import Environmental from "./components/Environmental";
 import AdminLogin from "./components/admin/AdminLogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import { useState } from "react";
 
-const queryClient = new QueryClient();
+const App = () => {
+  const [queryClient] = useState(() => new QueryClient());
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<OnboardingSlides />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/verify-identity" element={<VerifyIdentity />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/report" element={<ReportScreen />} />
-          <Route path="/alerts" element={<AlertsScreen />} />
-          <Route path="/map" element={<MapScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/quick-report" element={<QuickReport />} />
-          <Route path="/nearby-issues" element={<NearbyIssues />} />
-          <Route path="/rewards" element={<RewardsScreen />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/report-corruption" element={<ReportCorruption />} />
-          <Route path="/mental-health" element={<MentalHealth />} />
-          <Route path="/domestic-violence" element={<DomesticViolence />} />
-          <Route path="/environmental" element={<Environmental />} />
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<OnboardingSlides />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/verify" element={<Verify />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/verify-identity" element={<VerifyIdentity />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/report" element={<ReportScreen />} />
+            <Route path="/alerts" element={<AlertsScreen />} />
+            <Route path="/map" element={<MapScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/quick-report" element={<QuickReport />} />
+            <Route path="/nearby-issues" element={<NearbyIssues />} />
+            <Route path="/rewards" element={<RewardsScreen />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/report-corruption" element={<ReportCorruption />} />
+            <Route path="/mental-health" element={<MentalHealth />} />
+            <Route path="/domestic-violence" element={<DomesticViolence />} />
+            <Route path="/environmental" element={<Environmental />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

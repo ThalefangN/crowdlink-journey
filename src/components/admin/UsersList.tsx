@@ -40,7 +40,7 @@ const UsersList = () => {
                 <p className="text-sm text-muted-foreground">ID: {user.omang_id || 'Not provided'}</p>
               </div>
               <Badge
-                variant={user.verified ? 'success' : 'warning'}
+                variant={user.verified ? 'default' : 'secondary'}
                 className="capitalize"
               >
                 {user.verification_status}
@@ -66,7 +66,7 @@ const UsersList = () => {
               <div>
                 <h4 className="font-semibold">Verification Status</h4>
                 <Badge
-                  variant={selectedUser.verified ? 'success' : 'warning'}
+                  variant={selectedUser.verified ? 'default' : 'secondary'}
                   className="capitalize"
                 >
                   {selectedUser.verification_status}
