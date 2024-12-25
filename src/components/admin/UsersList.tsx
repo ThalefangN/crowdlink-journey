@@ -16,10 +16,12 @@ const UsersList = () => {
   const { data: users } = useQuery({
     queryKey: ['users-list'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .order('created_at', { ascending: false });
+      
+      if (error) throw error;
       return data;
     },
   });

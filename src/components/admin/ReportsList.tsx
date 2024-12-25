@@ -7,22 +7,24 @@ interface ReportsListProps {
   departmentId: string;
 }
 
+interface Profile {
+  full_name: string | null;
+  omang_id: string | null;
+}
+
 interface Report {
   id: string;
   category: string;
   status: string;
   created_at: string;
-  profiles?: {
-    full_name: string | null;
-    omang_id: string | null;
-  } | null;
+  profiles?: Profile | null;
 }
 
 const ReportsList = ({ departmentId }: ReportsListProps) => {
   const { data: reports } = useQuery({
     queryKey: ['department-reports', departmentId],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('reports')
         .select(`
           *,
@@ -34,6 +36,8 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
         .eq('department_id', departmentId)
         .order('created_at', { ascending: false })
         .limit(10);
+
+      if (error) throw error;
       return data as Report[];
     },
   });
