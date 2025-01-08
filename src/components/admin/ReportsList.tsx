@@ -10,7 +10,7 @@ interface ReportsListProps {
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 type Report = Database['public']['Tables']['reports']['Row'] & {
-  profiles?: Profile | null;
+  profiles: Profile | null;
 };
 
 const ReportsList = ({ departmentId }: ReportsListProps) => {
@@ -21,10 +21,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
         .from('reports')
         .select(`
           *,
-          profiles:user_id (
-            full_name,
-            omang_id
-          )
+          profiles (*)
         `)
         .eq('department_id', departmentId)
         .order('created_at', { ascending: false })
