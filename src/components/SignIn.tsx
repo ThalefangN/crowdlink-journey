@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Mail, Lock, Facebook, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { AuthError } from "@supabase/supabase-js";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -14,19 +13,6 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-
-  const handleAuthError = (error: AuthError) => {
-    if (error.message.includes("Invalid login credentials")) {
-      toast.error("Invalid email or password. Please try again.");
-    } else if (error.message.includes("Email not confirmed")) {
-      toast.error("Please verify your email before signing in.");
-    } else if (error.message.includes("refresh_token_not_found")) {
-      // Handle expired or invalid refresh token
-      toast.error("Your session has expired. Please sign in again.");
-    } else {
-      toast.error(error.message);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,27 +25,20 @@ const SignIn = () => {
       });
 
       if (error) {
-        handleAuthError(error);
+        if (error.message.includes("Invalid login credentials")) {
+          toast.error("Invalid email or password. Please try again.");
+        } else if (error.message.includes("Email not confirmed")) {
+          toast.error("Please verify your email before signing in.");
+        } else {
+          toast.error(error.message);
+        }
         return;
       }
 
-      // Check if the user is a department admin
-      const { data: department } = await supabase
-        .from('departments')
-        .select('email')
-        .eq('email', formData.email)
-        .maybeSingle();
-
       new Audio("/click.mp3").play().catch(console.error);
       toast.success("Signed in successfully!");
-      
-      // Redirect based on user type
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (department) {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/verify-identity");
-      }
+      navigate("/verify-identity");
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
       console.error("Signin error:", error);
