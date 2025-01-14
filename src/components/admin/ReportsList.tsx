@@ -21,7 +21,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
         .from('reports')
         .select(`
           *,
-          profiles (*)
+          profiles!reports_user_id_fkey (*)
         `)
         .eq('department_id', departmentId)
         .order('created_at', { ascending: false })
