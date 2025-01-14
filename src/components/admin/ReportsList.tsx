@@ -2,23 +2,16 @@ import { Card } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
+import { Database } from '@/integrations/supabase/types';
 
 interface ReportsListProps {
   departmentId: string;
 }
 
-interface Profile {
-  full_name: string | null;
-  omang_id: string | null;
-}
-
-interface Report {
-  id: string;
-  category: string;
-  status: string;
-  created_at: string;
-  profiles?: Profile | null;
-}
+type Profile = Database['public']['Tables']['profiles']['Row'];
+type Report = Database['public']['Tables']['reports']['Row'] & {
+  profiles: Profile | null;
+};
 
 const ReportsList = ({ departmentId }: ReportsListProps) => {
   const { data: reports } = useQuery({
@@ -28,10 +21,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
         .from('reports')
         .select(`
           *,
-          profiles:user_id (
-            full_name,
-            omang_id
-          )
+          profiles!reports_user_id_fkey (*)
         `)
         .eq('department_id', departmentId)
         .order('created_at', { ascending: false })
@@ -54,7 +44,7 @@ const ReportsList = ({ departmentId }: ReportsListProps) => {
                 By: {report.profiles?.full_name || 'Anonymous'}
               </p>
               <p className="text-sm text-muted-foreground">
-                {new Date(report.created_at).toLocaleDateString()}
+                {new Date(report.created_at || '').toLocaleDateString()}
               </p>
             </div>
             <Badge
